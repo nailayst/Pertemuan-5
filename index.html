@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tugas Harian</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        h1 {
+            color: #333;
+        }
+        input {
+            padding: 10px;
+            margin-right: 10px;
+            width: 300px;
+        }
+        button {
+            padding: 10px;
+            cursor: pointer;
+        }
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+        li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 5px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .task-actions {
+            display: flex;
+            gap: 10px;
+        }
+        .edit {
+            background-color: #f0ad4e;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+        .delete {
+            background-color: #d9534f;
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Daftar Tugas Harian</h1>
+        <input type="text" id="input" placeholder="Tambah Tugas Baru">
+        <button onclick="tambahtugas()">Tambah</button>
+        <ul id="listTugas"></ul>
+    </div>
+
+    <script>
+        function tambahtugas() {
+            const input = document.getElementById('input');
+            const text = input.value.trim();
+
+            if (text === '') {
+                alert('Masukkan tugas yang valid!');
+                return;
+            }
+
+            const listTugas = document.getElementById('listTugas');
+
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            span.textContent = text;
+            li.appendChild(span);
+
+            const actionsDiv = document.createElement('div');
+            actionsDiv.className = 'task-actions';
+
+            const editButton = document.createElement('button');
+            editButton.textContent = 'Edit';
+            editButton.className = 'edit';
+            editButton.onclick = function() {
+                const newtext = prompt('Edit Tugas:', span.textContent);
+                if (newtext !== null && newtext.trim() !== '') {
+                    span.textContent = newtext.trim();
+                }
+            };
+
+            const deleteButton = document.createElement('button');
+            deleteButton.textContent = 'Hapus';
+            deleteButton.className = 'delete';
+            deleteButton.onclick = function() {
+                listTugas.removeChild(li);
+            };
+
+            actionsDiv.appendChild(editButton);
+            actionsDiv.appendChild(deleteButton);
+            li.appendChild(actionsDiv);
+
+            listTugas.appendChild(li);
+
+            input.value = '';
+        }
+    </script>
+</body>
+</html>
